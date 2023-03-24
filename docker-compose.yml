@@ -1,0 +1,60 @@
+version: '3.4'
+
+volumes:
+    uploads:
+        driver: local
+    logs:
+        driver: local
+    mysql:
+        driver: local
+
+networks:
+    app_net:
+    db_net:
+
+services:
+    ospos:
+        build:
+            context: .
+            target: osman_dev
+        container_name: osman_app
+        restart: always
+        depends_on:
+          - mysql
+        ports:
+          - "8989:80"
+        networks:
+          - app_net
+          - db_net
+        volumes:
+          - .:/app
+          - uploads:/app/uploads
+          - logs:/app/application/logs
+          - ./conf.d/php.ini:/usr/local/etc/php/conf.d/php.ini
+        links:
+          - mysql
+        environment:
+          - PHP_TIMEZONE=UTC
+          - MYSQL_USERNAME=admin
+          - MYSQL_PASSWORD=pointofsale
+          - MYSQL_DB_NAME=ospos
+          - MYSQL_HOST_NAME=mysql
+          - XDEBUG_CONFIG=remote_host=172.17.0.1
+          - PHP_MAX_INPUT_VARS=3000
+    mysql:
+        image: mariadb:10.5
+        container_name: mysql_man
+        restart: always
+        expose:
+          - "3306:3306"
+        networks:
+          - db_net
+        volumes:
+          - ./database/database.sql:/docker-entrypoint-initdb.d/database.sql
+          - mysql:/var/lib/mysql:rw
+        environment:
+          - MYSQL_ROOT_PASSWORD=pointofsale
+          - MYSQL_DATABASE=ospos
+          - MYSQL_USER=admin
+          - MYSQL_PASSWORD=pointofsale
+          - MYSQL_TCP_PORT=3306
