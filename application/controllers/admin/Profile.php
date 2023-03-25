@@ -42,7 +42,7 @@ class Profile extends MY_Controller {
 	public function change_pwd(){
 
 		$id = $this->session->userdata('id');
-		var_dump($id);
+		//var_dump($id);die();
 
 		if($this->input->post('submit')){
 
@@ -63,7 +63,7 @@ class Profile extends MY_Controller {
 				//echo $old_password;
 
 				$user = $this->admin_model->get_admin_by_id($id);
-				var_dump($user);die();
+				//var_dump($user);die();
 				if(password_verify($old_password,$user['password']))
 				{
 					$data = array(
@@ -73,7 +73,7 @@ class Profile extends MY_Controller {
 					$data = $this->security->xss_clean($data);
 					$result = $this->admin_model->change_pwd($data, $id);
 					if($result){
-						$this->session->set_flashdata('success', 'Password has been changed successfully!');
+						$this->session->set_flashdata('success', 'Đổi mật khẩu thành công!');
 						redirect(base_url('admin/profile/change_pwd'));
 					}
 				} else {

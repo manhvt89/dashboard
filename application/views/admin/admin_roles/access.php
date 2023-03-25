@@ -16,7 +16,7 @@
             	<div class="col-md-12">
                     <h3 class="box-title">
                         <span class="mr5"><?= trans('permission_access') ?> : </span> 
-						<?=strtoupper($record['admin_role_title'])?>
+						<?=strtoupper($record['title'])?>
                     </h3>
                 </div>
             </div>
@@ -71,7 +71,7 @@ $("body").on("change",".tgl_checkbox",function(){
 		'<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php echo $this->security->get_csrf_hash(); ?>',
 		module : $(this).data('module'),
 		operation : $(this).data('operation'),
-		admin_role_id : <?=$record['admin_role_id']?>,
+		admin_role_id : <?=$record['id']?>,
 		status : $(this).is(':checked')==true?1:0
 	},
 	function(data){

@@ -17,7 +17,7 @@
            <!-- For Messages -->
             <?php $this->load->view('admin/includes/_messages.php') ?>
 
-            <?php echo form_open(base_url('admin/admin_roles/module_edit/'.$module['module_id']), 'class="form-horizontal"');  ?> 
+            <?php echo form_open(base_url('admin/admin_roles/module_edit/'.$module['module_uuid']), 'class="form-horizontal"');  ?> 
               <div class="form-group">
                 <label for="module_name" class="col-md-2 control-label"><?= trans('module_name') ?></label>
 

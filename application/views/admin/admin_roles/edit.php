@@ -15,13 +15,13 @@
             <div class="card-body">
     			<?php echo form_open(base_url('admin/admin_roles/edit'), 'id="frmvalidate"');  ?> 
     						
-                    <input type="hidden" name="admin_role_id" value="<?=$record['admin_role_id']?>"  />
+                    <input type="hidden" name="admin_role_id" value="<?=$record['id']?>"  />
                     <div class="box-body">
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1"><?= trans('admin_role') ?></label>
-                                    <input class="form-control" type="text" required="required" name="admin_role_title" value="<?=isset($record['admin_role_title'])?$record['admin_role_title']:''?>">
+                                    <input class="form-control" type="text" required="required" name="admin_role_title" value="<?=isset($record['title'])?$record['title']:''?>">
                                 </div>
                             </div>
                             <div class="col-sm-12">
@@ -29,12 +29,12 @@
                                     <label for="exampleInputEmail1"><?= trans('admin_role') ?> <?= trans('status') ?></label>
                                     <div class="radio">
                                         <label>
-                                        <input type="radio" name="admin_role_status"  value="1" <?php if(isset($record['admin_role_status']) && $record['admin_role_status']==1 ){echo 'checked';}?> checked="checked">
+                                        <input type="radio" name="admin_role_status"  value="1" <?php if(isset($record['status']) && $record['status']==1 ){echo 'checked';}?> checked="checked">
                                         Active
                                         </label>
                                         &nbsp;&nbsp;
                                         <label>
-                                        <input type="radio" name="admin_role_status"  value="0" <?php if(isset($record['admin_role_status']) && $record['admin_role_status']==0 ){echo 'checked';}?>>
+                                        <input type="radio" name="admin_role_status"  value="0" <?php if(isset($record['status']) && $record['status']==0 ){echo 'checked';}?>>
                                         Inactive
                                         </label>
                                     </div>

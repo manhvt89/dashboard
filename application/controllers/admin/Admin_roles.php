@@ -81,13 +81,15 @@ class Admin_roles extends MY_Controller
 	}
 
 	//--------------------------------------------------
-	function access($id=""){
-
+	function access($uuid=""){
+		
 		$this->rbac->check_operation_access(); // check opration permission
 
 		$data['title'] = trans('admin_permissions');
-		$data['record']= $this->admin_roles->get_role_by_id($id);
-		$data['access']= $this->admin_roles->get_access($id);
+		//$data['record']= $this->admin_roles->get_role_by_id($id);
+		$data['record']= $this->admin_roles->get_role_by_uuid($uuid);
+		
+		$data['access']= $this->admin_roles->get_access($data['record']['id']);
 		$data['modules']= $this->admin_roles->get_modules();
 
 		$this->load->view('admin/includes/_header');
@@ -171,8 +173,8 @@ class Admin_roles extends MY_Controller
 	}
 
 	//-----------------------------------------------------------
-	public function module_edit($id=0){
-
+	public function module_edit($uuid=0){
+		$id = $uuid;
 		$this->rbac->check_operation_access(); // check opration permission
 
 		if($this->input->post('submit')){
@@ -208,7 +210,7 @@ class Admin_roles extends MY_Controller
 		else{
 			$data['title'] = trans('update_module');
 			$data['module'] = $this->admin_roles->get_module_by_id($id);
-
+			$data['module'] = $this->admin_roles->get_module_by_uuid($id);
 			$this->load->view('admin/includes/_header');
 			$this->load->view('admin/admin_roles/module_edit', $data);
 			$this->load->view('admin/includes/_footer');

@@ -198,7 +198,7 @@ CREATE TABLE `modules` (
   `fa_icon` varchar(255) CHARACTER SET utf8 NOT NULL,
   `operation` TEXT CHARACTER SET utf8 NOT NULL DEFAULT '',
   `sort_order` tinyint(4) NOT NULL DEFAULT 1,
-  `modules_uuid` varchar(150) NOT NULL DEFAULT uuid()
+  `module_uuid` varchar(150) NOT NULL DEFAULT uuid()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -12359,6 +12359,8 @@ ALTER TABLE `wards`
 --
 ALTER TABLE `sub_modules`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
+
+-- ALTER TABLE modules RENAME COLUMN modules_uuid TO module_uuid;
 
 --
 -- AUTO_INCREMENT for table `user_company`
