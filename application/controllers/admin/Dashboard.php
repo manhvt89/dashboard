@@ -15,7 +15,7 @@ class Dashboard extends My_Controller {
 		$this->rbac->check_module_access();
 
 		if($this->uri->segment(3) != '')
-		$this->rbac->check_operation_access();
+			$this->rbac->check_operation_access();
 
 		$this->load->model('admin/dashboard_model', 'dashboard_model');
 

@@ -5,7 +5,7 @@ function get_lang_name_by_id($id)
 {
     $ci = & get_instance();
     $ci->db->where('id',$id);
-    return $ci->db->get('ci_language')->row_array()['name'];
+    return $ci->db->get('languages')->row_array()['name'];
 }
 
 // -----------------------------------------------------------------------------
@@ -14,7 +14,7 @@ function get_lang_short_code($id)
 {
     $ci = & get_instance();
     $ci->db->where('id',$id);
-    return $ci->db->get('ci_language')->row_array()['short_name'];
+    return $ci->db->get('languages')->row_array()['short_name'];
 }
 
 // -----------------------------------------------------------------------------
@@ -23,7 +23,7 @@ function get_language_list()
 {
     $ci = & get_instance();
     $ci->db->where('status',1);
-    return $ci->db->get('ci_language')->result_array();
+    return $ci->db->get('languages')->result_array();
 }
 
 // -----------------------------------------------------------------------------
@@ -31,7 +31,7 @@ function get_language_list()
 function get_country_list()
 {
     $ci = & get_instance();
-    return $ci->db->get('ci_countries')->result_array();
+    return $ci->db->get('countries')->result_array();
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ function get_country_list()
 function get_country_name($id)
 {
     $ci = & get_instance();
-    return $ci->db->get_where('ci_countries', array('id' => $id))->row_array()['name'];
+    return $ci->db->get_where('countries', array('id' => $id))->row_array()['name'];
 }
 
 // -----------------------------------------------------------------------------
@@ -47,7 +47,7 @@ function get_country_name($id)
 function get_country_id($title)
 {
     $ci = & get_instance();
-    return $ci->db->get_where('ci_countries', array('slug' => $title))->row_array()['id'];
+    return $ci->db->get_where('countries', array('slug' => $title))->row_array()['id'];
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ function get_country_id($title)
 function get_country_slug($id)
 {
     $ci = & get_instance();
-    return $ci->db->get_where('ci_countries', array('id' => $id))->row_array()['slug'];
+    return $ci->db->get_where('countries', array('id' => $id))->row_array()['slug'];
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ function get_country_slug($id)
 function get_country_states($country_id)
 {
     $ci = & get_instance();
-    return $ci->db->select('*')->where('country_id',$country_id)->get('ci_states')->result_array();
+    return $ci->db->select('*')->where('country_id',$country_id)->get('states')->result_array();
 }
 
 // -----------------------------------------------------------------------------
@@ -71,14 +71,14 @@ function get_country_states($country_id)
 function get_state_cities($state_id)
 {
     $ci = & get_instance();
-    return $ci->db->select('*')->where('state_id',$state_id)->get('ci_cities')->result_array();
+    return $ci->db->select('*')->where('state_id',$state_id)->get('cities')->result_array();
 }
 
 // Get state name by ID
 function get_state_name($id)
 {
     $ci = & get_instance();
-    return $ci->db->get_where('ci_states', array('id' => $id))->row_array()['name'];
+    return $ci->db->get_where('states', array('id' => $id))->row_array()['name'];
 }
 
 // -----------------------------------------------------------------------------
@@ -86,7 +86,7 @@ function get_state_name($id)
 function get_city_name($id)
 {
     $ci = & get_instance();
-    return $ci->db->get_where('ci_cities', array('id' => $id))->row_array()['name'];
+    return $ci->db->get_where('cities', array('id' => $id))->row_array()['name'];
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +94,7 @@ function get_city_name($id)
 function get_city_slug($id)
 {
     $ci = & get_instance();
-    return $ci->db->get_where('ci_cities', array('id' => $id))->row_array()['slug'];
+    return $ci->db->get_where('cities', array('id' => $id))->row_array()['slug'];
 }
 
 /**

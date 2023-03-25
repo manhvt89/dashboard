@@ -22,7 +22,7 @@ services:
         depends_on:
           - mysql
         ports:
-          - "8989:80"
+          - "9999:80"
         networks:
           - app_net
           - db_net
@@ -46,7 +46,7 @@ services:
         container_name: mysql_man
         restart: always
         expose:
-          - "3306:3306"
+          - "3307:3306"
         networks:
           - db_net
         volumes:

@@ -1,5 +1,5 @@
 <?php 
-$cur_tab = $this->uri->segment(2)==''?'dashboard': $this->uri->segment(2);  
+	$cur_tab = $this->uri->segment(2)==''?'dashboard': $this->uri->segment(2);
 ?>  
 
 
@@ -29,13 +29,13 @@ $cur_tab = $this->uri->segment(2)==''?'dashboard': $this->uri->segment(2);
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
-				<?php if($this->session->userdata('admin_role_id') == 1): ?>		 
+			<?php if($this->session->userdata('role_id') == 2): ?>		 
         <?php 
           $menu = get_sidebar_menu(); 
 
           foreach ($menu as $nav):
 
-            $sub_menu = get_sidebar_sub_menu($nav['module_id']);
+            $sub_menu = get_sidebar_sub_menu($nav['id']);
 
             $has_submenu = (count($sub_menu) > 0) ? true : false;
         ?>

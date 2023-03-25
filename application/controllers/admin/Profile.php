@@ -41,7 +41,8 @@ class Profile extends MY_Controller {
 	//-------------------------------------------------------------------------
 	public function change_pwd(){
 
-		$id = $this->session->userdata('admin_id');
+		$id = $this->session->userdata('id');
+		var_dump($id);
 
 		if($this->input->post('submit')){
 
@@ -62,7 +63,7 @@ class Profile extends MY_Controller {
 				//echo $old_password;
 
 				$user = $this->admin_model->get_admin_by_id($id);
-				//var_dump($user);die();
+				var_dump($user);die();
 				if(password_verify($old_password,$user['password']))
 				{
 					$data = array(

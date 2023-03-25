@@ -34,9 +34,9 @@
         {
             $ci =& get_instance();
             $ci->db->select('*');
-            $ci->db->where('parent',$parent_id);
+            $ci->db->where('parent_id',$parent_id);
             $ci->db->order_by('sort_order','asc');
-            return $ci->db->get('sub_module')->result_array();
+            return $ci->db->get('sub_modules')->result_array();
         }
     }
 
@@ -49,7 +49,7 @@
             $ci =& get_instance();
             $ci->db->select('*');
             $ci->db->order_by('sort_order','asc');
-            return $ci->db->get('module')->result_array();
+            return $ci->db->get('modules')->result_array();
         }
     }
 

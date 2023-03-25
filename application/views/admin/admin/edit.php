@@ -16,19 +16,20 @@
            <!-- For Messages -->
             <?php $this->load->view('admin/includes/_messages.php') ?>
               
-            <?php echo form_open(base_url('admin/admin/edit/'.$admin['admin_id']), 'class="form-horizontal"' )?> 
+            <?php echo form_open(base_url('admin/admin/edit/'.$user['user_uuid']), 'class="form-horizontal"' )?> 
               <div class="form-group">
                 <label for="username" class="col-md-2 control-label"><?= trans('username') ?></label>
 
                 <div class="col-md-12">
-                  <input type="text" name="username" value="<?= $admin['username']; ?>" class="form-control" id="username" placeholder="">
+                  <input type="hidden" name="id" value="<?= $user['id']; ?>" class="form-control" id="id" placeholder="">
+                  <input type="text" name="username" value="<?= $user['username']; ?>" class="form-control" id="username" placeholder="">
                 </div>
               </div>
               <div class="form-group">
                 <label for="firstname" class="col-md-2 control-label"><?= trans('firstname') ?></label>
 
                 <div class="col-md-12">
-                  <input type="text" name="firstname" value="<?= $admin['firstname']; ?>" class="form-control" id="firstname" placeholder="">
+                  <input type="text" name="firstname" value="<?= $user['firstname']; ?>" class="form-control" id="firstname" placeholder="">
                 </div>
               </div>
 
@@ -36,7 +37,7 @@
                 <label for="lastname" class="col-md-2 control-label"><?= trans('lastname') ?></label>
 
                 <div class="col-md-12">
-                  <input type="text" name="lastname" value="<?= $admin['lastname']; ?>" class="form-control" id="lastname" placeholder="">
+                  <input type="text" name="lastname" value="<?= $user['lastname']; ?>" class="form-control" id="lastname" placeholder="">
                 </div>
               </div>
 
@@ -44,14 +45,14 @@
                 <label for="email" class="col-md-2 control-label"><?= trans('email') ?></label>
 
                 <div class="col-md-12">
-                  <input type="email" name="email" value="<?= $admin['email']; ?>" class="form-control" id="email" placeholder="">
+                  <input type="email" name="email" value="<?= $user['email']; ?>" class="form-control" id="email" placeholder="">
                 </div>
               </div>
               <div class="form-group">
                 <label for="mobile_no" class="col-md-2 control-label"><?= trans('mobile_no') ?></label>
 
                 <div class="col-md-12">
-                  <input type="number" name="mobile_no" value="<?= $admin['mobile_no']; ?>" class="form-control" id="mobile_no" placeholder="">
+                  <input type="number" name="mobile_no" value="<?= $user['mobile_no']; ?>" class="form-control" id="mobile_no" placeholder="">
                 </div>
               </div>
               <div class="form-group">
@@ -60,8 +61,8 @@
                 <div class="col-md-12">
                   <select name="status" class="form-control">
                     <option value=""><?= trans('select_status') ?></option>
-                    <option value="1" <?= ($admin['is_active'] == 1)?'selected': '' ?> ><?= trans('active') ?></option>
-                    <option value="0" <?= ($admin['is_active'] == 0)?'selected': '' ?>><?= trans('inactive') ?></option>
+                    <option value="1" <?= ($user['is_active'] == 1)?'selected': '' ?> ><?= trans('active') ?></option>
+                    <option value="0" <?= ($user['is_active'] == 0)?'selected': '' ?>><?= trans('inactive') ?></option>
                   </select>
                 </div>
               </div>
@@ -80,10 +81,10 @@
                   <select name="role" class="form-control">
                     <option value=""><?= trans('select_role') ?></option>
                     <?php foreach($admin_roles as $role): ?>
-                      <?php if($role['admin_role_id'] == $admin['admin_role_id']): ?>
-                        <option value="<?= $role['admin_role_id']; ?>" selected><?= $role['admin_role_title']; ?></option>
+                      <?php if($role['id'] == $user['user_role_id']): ?>
+                        <option value="<?= $role['id']; ?>" selected><?= $role['title']; ?></option>
                         <?php else: ?>
-                          <option value="<?= $role['admin_role_id']; ?>"><?= $role['admin_role_title']; ?></option>
+                          <option value="<?= $role['id']; ?>"><?= $role['title']; ?></option>
                         <?php endif; ?>
                       <?php endforeach; ?>
                     </select>

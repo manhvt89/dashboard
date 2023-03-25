@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.168.32.2',
+	'hostname' => '192.168.64.2',
 	'username' => 'admin',
 	'password' => 'pointofsale',
 	'database' => 'ospos',

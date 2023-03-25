@@ -12,8 +12,8 @@ class RBAC
 	//----------------------------------------------------------------
 	function set_access_in_session()
 	{
-		$this->obj->db->from('module_access');
-		$this->obj->db->where('admin_role_id',$this->obj->session->userdata('admin_role_id'));
+		$this->obj->db->from('modules_accesses');
+		$this->obj->db->where('user_role_id',$this->obj->session->userdata('role_id'));
 		$query=$this->obj->db->get();
 		$data=array();
 		foreach($query->result_array() as $v)

@@ -15,11 +15,11 @@
             <?php foreach($info as $row): ?>
             <tr>
             	<td>
-					<?=$row['admin_id']?>
+					<?=$row['id']?>
                 </td>
                 <td>
 					<h4 class="m0 mb5"><?=$row['lastname']?> <?=$row['firstname']?></h4>
-                    <small class="text-muted"><?=$row['admin_role_title']?></small>
+                    <small class="text-muted"><?=$row['title']?></small>
                 </td>
                 <td>
                     <?=$row['username']?>
@@ -28,16 +28,16 @@
 					<?=$row['email']?>
                 </td>
                 <td>
-                    <button class="btn btn-xs btn-success"><?=$row['admin_role_title']?></button>
+                    <button class="btn btn-xs btn-success"><?=$row['title']?></button>
                 </td> 
                 <td><input class='tgl tgl-ios tgl_checkbox' 
-                    data-id="<?=$row['admin_id']?>" 
-                    id='cb_<?=$row['admin_id']?>' 
+                    data-id="<?=$row['id']?>" 
+                    id='cb_<?=$row['id']?>' 
                     type='checkbox' <?php echo ($row['is_active'] == 1)? "checked" : ""; ?> />
-                    <label class='tgl-btn' for='cb_<?=$row['admin_id']?>'></label>
+                    <label class='tgl-btn' for='cb_<?=$row['id']?>'></label>
                 </td>
                 <td>
-                    <a href="<?= base_url("admin/admin/edit/".$row['admin_id']); ?>" class="btn btn-warning btn-xs mr5" >
+                    <a href="<?= base_url("admin/admin/edit/".$row['user_uuid']); ?>" class="btn btn-warning btn-xs mr5" >
                     <i class="fa fa-edit"></i>
                     </a>
                 

@@ -108,8 +108,8 @@ class Admin extends MY_Controller
 	}
 
 	//--------------------------------------------------
-	function edit($id=""){
-
+	function edit($uuid=""){
+		$id = $uuid;
 		$this->rbac->check_operation_access(); // check opration permission
 
 		$data['admin_roles'] = $this->admin->get_admin_roles();
@@ -131,7 +131,7 @@ class Admin extends MY_Controller
 			}
 			else{
 				$data = array(
-					'admin_role_id' => $this->input->post('role'),
+					'user_role_id' => $this->input->post('role'),
 					'username' => $this->input->post('username'),
 					'firstname' => $this->input->post('firstname'),
 					'lastname' => $this->input->post('lastname'),
@@ -141,12 +141,14 @@ class Admin extends MY_Controller
 					'updated_at' => date('Y-m-d : h:m:s'),
 				);
 
+				$_iId = $this->input->post('id');
+
 				if($this->input->post('password') != '')
-				$data['password'] = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
+					$data['password'] = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
 
 				$data = $this->security->xss_clean($data);
-				$result = $this->admin->edit_admin($data, $id);
-
+				$result = $this->admin->edit_admin($data, $_iId);
+				//var_dump($result );die();
 				if($result){
 					// Activity Log 
 					$this->activity_model->add_log(5);
@@ -160,8 +162,8 @@ class Admin extends MY_Controller
 			redirect('admin/admin');
 		}
 		else{
-			$data['admin'] = $this->admin->get_admin_by_id($id);
-			
+			$data['user'] = $this->admin->get_admin_by_uuid($id);
+			//var_dump($data['user']);
 			$this->load->view('admin/includes/_header');
 			$this->load->view('admin/admin/edit', $data);
 			$this->load->view('admin/includes/_footer');

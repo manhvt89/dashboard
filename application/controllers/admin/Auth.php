@@ -55,11 +55,12 @@ class Auth extends MY_Controller {
 					}
 					if($result['is_admin'] == 1){
 						$admin_data = array(
-							'admin_id' => $result['admin_id'],
+							'id' => $result['id'],
 							'username' => $result['username'],
-							'admin_role_id' => $result['admin_role_id'],
-							'admin_role' => $result['admin_role_title'],
+							'role_id' => $result['user_role_id'],
+							'role_title' => $result['title'],
 							'is_supper' => $result['is_supper'],
+							'type'=>$result['type'],
 							'is_admin_login' => TRUE
 						);
 						$this->session->set_userdata($admin_data);

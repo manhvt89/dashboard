@@ -24,8 +24,8 @@
                         <div class="form-group">
                             <select name="type" class="form-control" onchange="filter_data()" >
                                 <option value=""><?= trans('all_admin_types') ?></option>
-                                <?php foreach($admin_roles as $admin_role):?>
-                                    <option value="<?=$admin_role['admin_role_id']?>"><?=$admin_role['admin_role_title']?></option>
+                                <?php foreach($admin_roles as $role):?>
+                                    <option value="<?=$role['id']?>"><?=$role['title']?></option>
                                 <?php endforeach;?>
                             </select>
                         </div>
