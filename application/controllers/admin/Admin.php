@@ -58,14 +58,29 @@ class Admin extends MY_Controller
 		$this->rbac->check_operation_access(); // check opration permission
 
 		$data['admin_roles']=$this->admin->get_admin_roles();
+		$data['typies'] = array(
+							array(
+								'id'=>1,
+								'text'=>'Người dùng quản trị hệ thống'
+							),
+							array(
+								'id'=>2,
+								'text'=>'Người dùng hệ thống vận hành'
+							),
+							array(
+								'id'=>3,
+								'text'=>'Người dùng thuộc tổ chức'
+							)
+
+						);
 
 		if($this->input->post('submit')){
-				$this->form_validation->set_rules('username', 'Username', 'trim|alpha_numeric|is_unique[ci_admin.username]|required');
+				$this->form_validation->set_rules('username', 'Username', 'trim|alpha_numeric|is_unique[users.username]|required');
 				$this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
 				$this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
 				$this->form_validation->set_rules('email', 'Email', 'trim|valid_email|required');
 				$this->form_validation->set_rules('mobile_no', 'Number', 'trim|required');
-				$this->form_validation->set_rules('password', 'Password', 'trim|required');
+				$this->form_validation->set_rules('password', 'Password', 'trim|required');	
 				$this->form_validation->set_rules('role', 'Role', 'trim|required');
 				if ($this->form_validation->run() == FALSE) {
 					$data = array(
@@ -76,7 +91,7 @@ class Admin extends MY_Controller
 				}
 				else{
 					$data = array(
-						'admin_role_id' => $this->input->post('role'),
+						'user_role_id' => $this->input->post('role'),
 						'username' => $this->input->post('username'),
 						'firstname' => $this->input->post('firstname'),
 						'lastname' => $this->input->post('lastname'),
@@ -86,6 +101,7 @@ class Admin extends MY_Controller
 						'is_active' => 1,
 						'created_at' => date('Y-m-d : h:m:s'),
 						'updated_at' => date('Y-m-d : h:m:s'),
+						'type'=>$this->input->post('post')
 					);
 					$data = $this->security->xss_clean($data);
 					$result = $this->admin->add_admin($data);

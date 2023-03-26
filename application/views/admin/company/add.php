@@ -1,5 +1,5 @@
    <!-- Select2 -->
-   <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/select2/select2.min.css">
+  <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/select2/select2.min.css">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Main content -->
@@ -31,64 +31,29 @@
                       <input type="text" name="companyname" class="form-control" id="companyname" placeholder="">
                     </div>
                   </div>
-                 
+
+                  
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="company_phone" class="col-md-12 control-label"><?= trans('company_phone') ?></label>
+                        <label for="company_tel" class="col-md-12 control-label"><?= trans('company_tel') ?></label>
 
                         <div class="col-md-12">
-                          <input type="number" name="company_phone" class="form-control" id="company_phone" placeholder="">
+                          <input type="number" name="company_tel" class="form-control" id="company_tel" placeholder="">
                         </div>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="company_fax" class="col-md-12 control-label"><?= trans('company_fax') ?></label>
+                        <label for="company_number" class="col-md-12 control-label"><?= trans('company_number') ?></label>
 
                         <div class="col-md-12">
-                          <input type="number" name="company_fax" class="form-control" id="company_fax" placeholder="">
+                          <input type="text" name="company_number" class="form-control" id="company_number" placeholder="">
                         </div>
                       </div>
                     </div>  
                   </div>
-                  <div class="row">
-                    <div class="col-md-6">  
-                      <div class="form-group">
-                        <label for="company_authorized" class="col-md-12 control-label"><?= trans('company_authorized') ?></label>
-
-                        <div class="col-md-12">
-                          <input type="text" name="company_authorized" class="form-control" id="company_authorized" placeholder="">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6"> 
-                      <div class="form-group">
-                        <label for="company_designation" class="col-md-12 control-label"><?= trans('company_designation') ?></label>
-
-                        <div class="col-md-12">
-                          <input type="text" name="company_designation" class="form-control" id="company_designation" placeholder="">
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="main_product" class="col-md-12 control-label"><?= trans('main_product') ?></label>
-
-                    <div class="col-md-12">
-                      <textarea id="main_product" name="main_product" style="width: 100%"></textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="field" class="col-md-12 control-label"><?= trans('select_field') ?>*</label>
-                    <div class="col-md-12">
-                      <select name="field" class="form-control" id="field">
-                        <option value=""><?= trans('select_field') ?></option>
-                      </select>
-                    </div>
-                  </div>
-
+                  
                   <div class="form-group">
                     <label for="address" class="col-md-12 control-label"><?= trans('company_address') ?></label>
 
@@ -148,47 +113,22 @@
   <script src="<?= base_url() ?>assets/plugins/select2/select2.full.min.js"></script>
   <script type="text/javascript">
     "use strict";
-        /*
-        var aTelco = new Array('','Mobi','Vina','Viettel','VNMB','','ITelecom')
-        var dataTelco = [
-                            { id: 1, text: 'Mobi' },
-                            { id: 2, text: 'Vina' },
-                            { id: 3, text: 'Viettel' },
-                            { id: 4, text: 'VNMB' },
-                            { id: 6, text: 'ITelecom' }
-        ];*/
+       
     var states = <?=$states?>;
     var cities = <?=$cities?>;
     var wards = <?=$wards?>;
-    var fields = <?=$fields?>;
-    var leaders = <?=$users?>;
-    var members = <?=$users?>;
+  
+
     var loadSelect2 = function () {
                 // loading data from array
-
-                $('#leader').select2({
-                    allowClear: true,
-                    placeholder: "<?= trans('select_leader') ?>",
-                    data: leaders
-                });
-
-                $('#member').select2({
-                    allowClear: true,
-                    placeholder: "<?= trans('select_member') ?>",
-                    disabled: true,
-                });
-
-                $('#field').select2({
-                    allowClear: true,
-                    placeholder: "<?= trans('select_field') ?>",
-                    data: fields
-                });
 
                 $('#state').select2({
                     allowClear: true,
                     placeholder: "<?= trans('select_state') ?>",
                     data: states
                 });
+
+               
 
                 $('#city').select2({
                     allowClear: true,

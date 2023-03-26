@@ -130,6 +130,7 @@ class Location extends MY_Controller
 	public function state_datatable_json()
 	{				   					   
 		$records = $this->location_model->get_all_states();
+		//var_dump($records);
 		$data = array();
 		$count=0;
 		foreach ($records['data']  as $row) 

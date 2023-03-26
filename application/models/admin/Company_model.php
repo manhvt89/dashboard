@@ -7,8 +7,29 @@ class Company_model extends CI_Model{
 	{
 		# code...
 		if($id == 0) return null;
-		$query = $this->db->get_where('ci_companies', array('id' => $id));
-		return $result = $query->row_array();
+		$query = $this->db->get_where('companies', array('id' => $id));
+		return $query->row_array();
+	}
+
+	public function get_the_company_by_uuid($uuid = 0)
+	{
+		# code...
+		if($uuid == 0) return null;
+		$query = $this->db->get_where('companies', array('company_uuid' => $uuid));
+		return $query->row_array();
+	}
+	/*
+	Lây thông tin chi tiết của công ty, gồm cả thông tin người dùng chủ sở hữu
+	*/
+	public function get_the_company_info($uuid = 0)
+	{
+		if($uuid == 0) return null;
+		$this->db->select('companies.*, users.type, users.firstname, users.lastname, users.email, users.user_uuid');
+		$this->db->from('companies');
+		$this->db->join('users','companies.owner_id = users.id','left');
+		$this->db->where('company_uuid',$uuid);
+		$query = $this->db->get();
+		return $query->row_array();
 	}
 
 	public function get_users_company($id)
@@ -17,46 +38,23 @@ class Company_model extends CI_Model{
 		return $query->result_array();
 	}
 	
+	// Lấy danh sách người dùng thuộc công ty, không bảo gồm người dùng sở hữu;
 	public function get_users_by_company($id)
 	{
-		$this->db->select('ci_admin.*, user_company.type');
-		$this->db->from('ci_admin');
-		$this->db->join('user_company','user_company.user_id = ci_admin.admin_id','left');
-		$this->db->where('user_company.company_id',$id);
+		$this->db->select('users.*, users_companies.type');
+		$this->db->from('users');
+		$this->db->join('users_companies','users_companies.user_id = users.id','left');
+		$this->db->where('users_companies.id',$id);
 		$query = $this->db->get();
 		return $query->result_array();
 	}
+
 	// Cập nhật, để giúp người tạo doanh nghiệp phân quyền leader và member vào doanh nghiệp
 	public function add_company($data)
 	{
 		//$this->db->trans_start();
-		$this->db->insert('ci_companies', $data);
+		$this->db->insert('companies', $data);
 		$company_id = $this->db->insert_id();
-		// $ld['user_id'] = $leader;
-		// $ld['company_id'] = $company_id;
-		// $ld['type'] = 1; //leader
-		// $ld['created_date'] = time(); //
-		// $this->db->insert('user_company', $ld);
-		// if(!empty($members))
-		// {
-		// 	foreach($members as $key=>$value)
-		// 	{
-		// 		$mb['user_id'] = $value;
-		// 		$mb['company_id'] = $company_id;
-		// 		$mb['type'] = 0; //member
-		// 		$mb['created_date'] = time(); //
-		// 		$this->db->insert('user_company', $mb);
-		// 	}
-			
-		// }
-		// $this->db->trans_complete();
-
-		// if ($this->db->trans_status() === FALSE)
-		// {
-		// 		// generate an error... or use the log_message() function to log your error
-		// } else {
-		// 	return $company_id;
-		// }
 		return $company_id;
 	}
 
@@ -81,10 +79,10 @@ class Company_model extends CI_Model{
 
 	public function get_all_company($start,$length,$role="")
 	{
-		$this->db->select('ci_companies.*, COUNT(campaign.id) as count_campaign');
-		$this->db->from('ci_companies');
+		$this->db->select('c.*, COUNT(b.id) as count_branches');
+		$this->db->from('companies as c');
 		
-		$this->db->join('campaign','campaign.company_id = ci_companies.id AND campaign.deleted = 0','left');
+		$this->db->join('companies as b','b.parent_id = c.id AND b.deleted = 0','left');
 		if($role!="")
 		{
 			if($role == 6){
@@ -94,8 +92,9 @@ class Company_model extends CI_Model{
 			}
 			
 		}
-		$this->db->group_by('ci_companies.id');
-		$this->db->order_by('ci_companies.id','desc');
+		$this->db->where('c.parent_id',0);
+		$this->db->group_by('c.id');
+		$this->db->order_by('c.id','desc');
 		$this->db->limit($length,$start);
 		$query = $this->db->get();
 		$records = array();
@@ -108,9 +107,9 @@ class Company_model extends CI_Model{
 
 	public function get_states()
 	{
-		$this->db->select('ci_states.*');
-		$this->db->from('ci_states');
-		$this->db->order_by('ci_states.name','asc');
+		$this->db->select('states.*');
+		$this->db->from('states');
+		$this->db->order_by('states.name','asc');
 
 		$query = $this->db->get();
 
@@ -125,9 +124,9 @@ class Company_model extends CI_Model{
 
 	public function get_cities()
 	{
-		$this->db->select('ci_cities.*');
-		$this->db->from('ci_cities');
-		$this->db->order_by('ci_cities.name','asc');
+		$this->db->select('cities.*');
+		$this->db->from('cities');
+		$this->db->order_by('cities.name','asc');
 
 		$query = $this->db->get();
 
@@ -142,9 +141,9 @@ class Company_model extends CI_Model{
 
 	public function get_wards()
 	{
-		$this->db->select('ci_wards.*');
-		$this->db->from('ci_wards');
-		$this->db->order_by('ci_wards.name','asc');
+		$this->db->select('wards.*');
+		$this->db->from('wards');
+		$this->db->order_by('wards.name','asc');
 
 		$query = $this->db->get();
 
@@ -159,32 +158,22 @@ class Company_model extends CI_Model{
 
 	public function get_fields($status='')
 	{
-		$this->db->select('company_field.*');
-		$this->db->from('company_field');
-		if($status != '')
-			$this->db->where('status',$status);
-		$this->db->order_by('company_field.name','asc');
-
-		$query = $this->db->get();
-
+		
 		$records = array();
 
-		if ($query->num_rows() > 0) 
-		{
-			$records = $query->result_array();
-		}
+		
 		return $records;
 	}
 
 	public function get_specialists($status='')
 	{
-		$this->db->select('ci_admin.admin_id as id, CONCAT(ci_admin.username,"|",ci_admin.firstname, " ", ci_admin.lastname) as name');
-		$this->db->from('ci_admin');
+		$this->db->select('users.id, CONCAT(users.username,"|",users.firstname, " ", users.lastname) as name');
+		$this->db->from('users');
 		if($status != '')
 			$this->db->where('is_active',$status);
-		$this->db->where('admin_role_id',6);
-		$this->db->or_where('admin_role_id',2);	
-		$this->db->order_by('ci_admin.firstname','asc');
+		$this->db->where('user_role_id',6);
+		$this->db->or_where('id',2);	
+		$this->db->order_by('users.firstname','asc');
 
 		$query = $this->db->get();
 

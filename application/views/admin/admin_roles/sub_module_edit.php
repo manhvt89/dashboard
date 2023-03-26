@@ -9,7 +9,7 @@
               Edit Sub Module </h3>
           </div>
           <div class="d-inline-block float-right">
-            <a href="<?= base_url('admin/admin_roles/sub_module/'.$module['parent']); ?>" class="btn btn-success"><i class="fa fa-list"></i> Sub Module List</a>
+            <a href="<?= base_url('admin/admin_roles/sub_module/'.$module['parent_id']); ?>" class="btn btn-success"><i class="fa fa-list"></i> Sub Module List</a>
           </div>
         </div>
         
@@ -18,7 +18,7 @@
            <!-- For Messages -->
             <?php $this->load->view('admin/includes/_messages.php') ?>
 
-            <?php echo form_open(base_url('admin/admin_roles/sub_module_edit/'.$module['id']), 'class="form-horizontal"');  ?> 
+            <?php echo form_open(base_url('admin/admin_roles/sub_module_edit/'.$module['sub_module_uuid']), 'class="form-horizontal"');  ?> 
 
               <div class="form-group">
                 <label for="module_name" class="col-md-2 control-label">Module Name</label>
@@ -27,7 +27,7 @@
                     $menu = get_sidebar_menu();
                     $others = array('class' => 'form-control select2', 'id' => 'module_name');
                     $options =  array_column($menu, 'module_name','module_id');
-                    echo form_dropdown('module_name',$options,$module['parent'],$others);
+                    echo form_dropdown('module_name',$options,$module['parent_id'],$others);
                   ?>
                 </div>
               </div>

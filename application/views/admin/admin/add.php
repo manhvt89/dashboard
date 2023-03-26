@@ -75,7 +75,19 @@
                       <select name="role" class="form-control">
                         <option value=""><?= trans('select_role') ?></option>
                         <?php foreach($admin_roles as $role): ?>
-                          <option value="<?= $role['admin_role_id']; ?>"><?= $role['admin_role_title']; ?></option>
+                          <option value="<?= $role['id']; ?>"><?= $role['title']; ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="role" class="col-md-12 control-label"><?= trans('select_user_type') ?>*</label>
+
+                    <div class="col-md-12">
+                      <select name="type" class="form-control">
+                        <option value=""><?= trans('select_user_type') ?></option>
+                        <?php foreach($typies as $type): ?>
+                          <option value="<?= $type['id']; ?>"><?= $type['text']; ?></option>
                         <?php endforeach; ?>
                       </select>
                     </div>

@@ -200,9 +200,11 @@ class Admin_roles extends MY_Controller
 					'sort_order' => $this->input->post('sort_order'),
 				);
 				$data = $this->security->xss_clean($data);
-				$result = $this->admin_roles->edit_module($data, $id);
+				//$result = $this->admin_roles->edit_module($data, $id);
+				$result = $this->admin_roles->edit_module_by_uuid($data, $id);
+				
 				if($result){
-					$this->session->set_flashdata('success', 'Module has been Updated successfully!');
+					$this->session->set_flashdata('success', 'Đã cập nhật thành công!');
 					redirect(base_url('admin/admin_roles/module'));
 				}
 			}
@@ -218,13 +220,14 @@ class Admin_roles extends MY_Controller
 	}
 
 	//------------------------------------------------------------
-	public function module_delete($id=''){
+	public function module_delete($uuid=''){
 
 		$this->rbac->check_operation_access(); // check opration permission
 
-		$this->admin_roles->delete_module($id);
+		//$this->admin_roles->delete_module($id);
+		$this->admin_roles->delete_module_by_uuid($uuid);
 
-		$this->session->set_flashdata('msg','Module has been Deleted Successfully.');	
+		$this->session->set_flashdata('msg','Xóa thành công.');	
 		redirect('admin/admin_roles/module');
 	}
 
@@ -288,7 +291,7 @@ class Admin_roles extends MY_Controller
 	}
 
 	// -----------------------------------------------------------
-	public function sub_module_edit($id = 0){
+	public function sub_module_edit($uuid = 0,$parrent_id=0){
 
 		$this->rbac->check_operation_access(); // check opration permission
 
@@ -303,19 +306,20 @@ class Admin_roles extends MY_Controller
 					'errors' => validation_errors()
 				);
 				$this->session->set_flashdata('errors', $data['errors']);
-				redirect(base_url('admin/admin_roles/sub_module_edit/'.$id),'refresh');
+				redirect(base_url('admin/admin_roles/sub_module_edit/'.$uuid),'refresh');
 			}
 			else{
 				$parent = $this->input->post('module_name');
 
 				$data = array(
-					'parent' => $parent,
+					'parent_id' => $parent,
 					'name' => $this->input->post('sub_module_name'),
 					'link' => $this->input->post('operation'),
 					'sort_order' => $this->input->post('sort_order'),
 				);
 				$data = $this->security->xss_clean($data);
 				$result = $this->admin_roles->edit_sub_module($data, $id);
+				$result = $this->admin_roles->edit_sub_module_by_uuid($data, $uuid);
 				if($result){
 					$this->session->set_flashdata('success', 'sub module has been Updated successfully!');
 					redirect(base_url('admin/admin_roles/sub_module/'.$parent));
@@ -324,10 +328,16 @@ class Admin_roles extends MY_Controller
 		}
 		else{
 			$data['title'] = '';
-			$data['module'] = $this->admin_roles->get_sub_module_by_id($id);
-			$this->load->view('admin/includes/_header');
-			$this->load->view('admin/admin_roles/sub_module_edit', $data);
-			$this->load->view('admin/includes/_footer');
+			$the_module = 1;//$this->admin_roles->get_module_by_uuid($uuid);
+			if(!empty($the_module))
+			{
+				$data['module'] = $this->admin_roles->get_sub_module_by_uuid($uuid);
+				$this->load->view('admin/includes/_header');
+				$this->load->view('admin/admin_roles/sub_module_edit', $data);
+				$this->load->view('admin/includes/_footer');
+			} else {
+				redirect(base_url('admin/admin_roles/sub_module/'.$parrent_id));
+			}
 		}
 	}
 

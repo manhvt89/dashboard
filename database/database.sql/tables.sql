@@ -19,6 +19,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `sessions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `sessions` (
   `id` varchar(40) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
@@ -76,6 +77,7 @@ CREATE TABLE `companies` (
   `tel` varchar(50) NOT NULL DEFAULT '',
   `type` tinyint(1) NOT NULL DEFAULT 0,
   `deleted` tinyint(1) NOT NULL DEFAULT 0,
+  `parent_id` int(11) NOT NULL DEFAULT 0,
   `company_uuid` tinyint(1) NOT NULL DEFAULT uuid()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -296,7 +298,7 @@ INSERT INTO `activity_status` (`id`, `description`) VALUES
 (8, 'Invoice Edited'),
 (9, 'Invoice Deleted');
 
--- --------------------------------------------------------
+-- 
 
 
 
@@ -318,7 +320,6 @@ INSERT INTO `users` (`id`, `user_role_id`, `username`, `firstname`, `lastname`, 
 (44, 6, 'tsquan', 'Quân', 'Trần Sỹ', 'tsquan@vnpi.vn', '0123456789', '', '$2y$10$DaidKAMEbjHtT4vQ1QRFbeKC/iLWXxtbV1bmlldvO1AF9bHuqQDJm', '0000-00-00 00:00:00', 1, 1, 0, 0, '', '', '', '2021-12-06 00:00:00', '2021-12-06 00:00:00'),
 (45, 6, 'vhquan', 'Quân', 'Vũ Hồng', 'vhquan@vnpi.vn', '0898094057', '', '$2y$10$CvQxWLFZlk7D276TskszX.h6h87AdRXtIRgDPjPp0d5Z.e15lOxJG', '0000-00-00 00:00:00', 1, 1, 0, 0, '', '', '', '2021-12-10 00:00:00', '2021-12-10 00:00:00');
 
--- --------------------------------------------------------
 
 --
 -- Table structure for table `ci_admin_roles`
@@ -335,8 +336,6 @@ INSERT INTO `users_roles` (`id`, `title`, `status`, `created_by`, `created_on`, 
 (3, 'Accountant', 0, 0, '2018-03-15 01:46:54', 0, '2019-01-26 02:17:38'),
 (4, 'Operator', 0, 0, '2018-03-16 05:52:45', 0, '2019-01-26 02:17:52'),
 (6, 'Chuyên gia', 1, 0, '2021-10-07 05:22:47', 0, '0000-00-00 00:00:00');
-
--- --------------------------------------------------------
 
 
 
@@ -1053,12 +1052,6 @@ INSERT INTO `cities` (`id`, `name`, `slug`, `state_id`, `status`) VALUES
 (708, 'Huyện Châu Thành', '', 82, 1),
 (709, 'Huyện Châu Thành', '', 84, 1);
 
--- --------------------------------------------------------
-
-
-
------------------------------------------------------
-
 
 
 --
@@ -1313,7 +1306,7 @@ INSERT INTO `countries` (`id`, `sortname`, `name`, `slug`, `phonecode`, `status`
 (245, 'ZM', 'Zambia', 'zambia', 260, 1),
 (246, 'ZW', 'Zimbabwe', 'zimbabwe', 263, 1);
 
--- --------------------------------------------------------
+
 
 --
 -- Table structure for table `ci_email_templates`
@@ -1330,7 +1323,7 @@ INSERT INTO `email_templates` (`id`, `name`, `slug`, `subject`, `body`, `last_up
 (2, 'Forget Password', 'forget-password', 'Recover your password', '<p>  </p><p>Hi  <b>{FULLNAME}</b>,<br><br></p><p>Welcome to LightAdmin!<br></p><p>We have received a request to reset your password. If you did not initiate this request, you can simply ignore this message and no action will be taken.</p><p><br>To reset your password, please click the link below:<br> {RESET_LINK}</p>  <p></p>', '2019-11-26 17:44:41'),
 (3, 'General Notification', '', 'aaaaa', '<p>asdfasdfasdfasd </p>', '2019-08-26 02:42:47');
 
--- --------------------------------------------------------
+
 
 --
 -- Table structure for table `ci_email_template_variables`
@@ -1348,7 +1341,7 @@ INSERT INTO `email_template_variables` (`id`, `template_id`, `variable_name`) VA
 (3, 2, '{RESET_LINK}'),
 (4, 2, '{FULLNAME}');
 
--- --------------------------------------------------------
+
 
 
 
@@ -1359,7 +1352,7 @@ INSERT INTO `email_template_variables` (`id`, `template_id`, `variable_name`) VA
 INSERT INTO `general_settings` (`id`, `favicon`, `logo`, `application_name`, `timezone`, `currency`, `default_language`, `copyright`, `email_from`, `smtp_host`, `smtp_port`, `smtp_user`, `smtp_pass`, `facebook_link`, `twitter_link`, `google_link`, `youtube_link`, `linkedin_link`, `instagram_link`, `recaptcha_secret_key`, `recaptcha_site_key`, `recaptcha_lang`, `created_date`, `updated_date`) VALUES
 (1, 'assets/img/2ad3d3d6dfc657f65e52f33ab05eaafb.png', 'assets/img/2ad3d3d6dfc657f65e52f33ab05eaafb.png', '5S tool', 'Asia/Ho_Chi_Minh', 'USD', 3, 'Copyright © 2021 VNPI All rights reserved.', 'info@domain.com', 'smtp.domain.com', 567, 'info@domain.com', '123456789', 'https://facebook.com', 'https://twitter.com', 'https://google.com', 'https://youtube.com', 'https://linkedin.com', 'https://instagram.com', '', '', 'en', '2021-11-15 00:00:00', '2021-11-15 00:00:00');
 
--- --------------------------------------------------------
+
 
 
 
@@ -1441,10 +1434,7 @@ INSERT INTO `states` (`id`, `name`, `slug`, `country_id`, `status`) VALUES
 (95, 'Tỉnh Bạc Liêu', '', 283, 1),
 (96, 'Tỉnh Cà Mau', '', 283, 1);
 
--- --------------------------------------------------------
 
-
--- --------------------------------------------------------
 
 
 
@@ -11965,8 +11955,6 @@ INSERT INTO `wards` (`id`, `name`, `status`, `slug`, `city_id`) VALUES
 (31510, 'Phường 2', 1, '', 667);
 
 
-
--- --------------------------------------------------------
 --
 -- Dumping data for table `module`
 --
@@ -11995,10 +11983,6 @@ INSERT INTO `modules` (`id`, `module_name`, `controller_name`, `fa_icon`, `opera
 (27, 'evaluation_form', 'assessment', 'fa-line-chart', 'access|add|view|/', 1),
 (28, 'company', 'company', 'fa-money', 'access|add|view|edit', 2),
 (29, 'campaign', 'campaign', 'fa-line-chart', 'access|add|view|/|create_evaluation|history', 3);
-
--- --------------------------------------------------------
-
-
 
 --
 -- Dumping data for table `module_access`
@@ -12075,7 +12059,7 @@ INSERT INTO `modules_accesses` (`id`, `user_role_id`, `module`, `operation`) VAL
 (102, 2, 'campaign', 'create_evaluation'),
 (103, 2, 'company', 'edit');
 
--- --------------------------------------------------------
+-- 
 
 --
 -- Table structure for table `photo`
@@ -12145,7 +12129,7 @@ INSERT INTO `sub_modules` (`id`, `parent_id`, `name`, `link`, `sort_order`) VALU
 
 
 
--- --------------------------------------------------------
+-- 
 
 --
 -- Table structure for table `user_company`

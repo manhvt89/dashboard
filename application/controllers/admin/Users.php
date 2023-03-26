@@ -36,13 +36,13 @@ class Users extends MY_Controller {
 				date_time($row['created_at']),	
 				'<span class="btn btn-success">'.$verify.'</span>',	
 				'<input class="tgl_checkbox tgl-ios" 
-				data-id="'.$row['id'].'" 
+				data-id="'.$row['user_uuid'].'" 
 				id="cb_'.$row['id'].'"
 				type="checkbox"  
 				'.$status.'><label for="cb_'.$row['id'].'"></label>',		
 
-				'<a title="View" class="view btn btn-sm btn-info" href="'.base_url('admin/users/edit/'.$row['id']).'"> <i class="fa fa-eye"></i></a>
-				<a title="Edit" class="update btn btn-sm btn-warning" href="'.base_url('admin/users/edit/'.$row['id']).'"> <i class="fa fa-pencil-square-o"></i></a>
+				'<a title="View" class="view btn btn-sm btn-info" href="'.base_url('admin/users/edit/'.$row['user_uuid']).'"> <i class="fa fa-eye"></i></a>
+				<a title="Edit" class="update btn btn-sm btn-warning" href="'.base_url('admin/users/edit/'.$row['user_uuid']).'"> <i class="fa fa-pencil-square-o"></i></a>
 				<a title="Delete" class="delete btn btn-sm btn-danger" href='.base_url("admin/users/delete/".$row['id']).' title="Delete" onclick="return confirm(\'Do you want to delete ?\')"> <i class="fa fa-trash-o"></i></a>'
 			);
 		}
@@ -53,7 +53,7 @@ class Users extends MY_Controller {
 	//-----------------------------------------------------------
 	function change_status()
 	{   
-		$this->user_model->change_status();
+		$this->user_model->change_status_by_uuid();
 	}
 
 	public function add(){

@@ -34,20 +34,20 @@ class Company extends MY_Controller
 		{  
 			//$status = $status . '<label class="tgl-btn" for="cb_'. $row['id'].'"></label>';
 			$company_view_evaluation = '';
-			if($row['count_campaign'] > 0)
+			if($row['count_branches'] > 0)
 			{
 				$company_view_evaluation = '<a href="'.base_url('admin/campaign/view_evaluation_company/').$row['id'].'">'.trans('company_view_evaluation').'</a>';
 			}
 			$company_create_evaluation = '<a href="'.base_url('admin/campaign/create_evaluation/').$row['id'].'">'.trans('company_create_evaluation').'</a>';
 			
-			$name = "<a href='".base_url("admin/company/view/").$row['id']."'>".$row['name']."</a>";
-			$act =  "<a href='".base_url("admin/company/edit/").$row['id']."'>Sửa</a>";
+			$name = "<a href='".base_url("admin/company/view/").$row['company_uuid']."'>".$row['name']."</a>";
+			$act =  "<a href='".base_url("admin/company/edit/").$row['company_uuid']."'>Sửa</a>";
 			
 			$data[]= array(
 				++$i,
 				$row['id'],
 				$name,
-				$row['authorized'],
+				'',
 				$row['tel'],
 				$row['address'],
 				$company_view_evaluation,
@@ -101,48 +101,41 @@ class Company extends MY_Controller
 			$wards[] = $t;
 		}
 
-		$Arrfields = $this->company_model->get_fields(1);
-		$fields = array();
-
-		foreach($Arrfields as $field)
-		{
-			$t = array(
-				'id'=>$field['id'],
-				'text'=>$field['name']
-			);
-			$fields[] = $t;
-		}
-
-		$ArrUsers = $this->company_model->get_specialists(1);
+		//$Arrfields = $this->company_model->get_fields(1);
+		$typies = array(
+			array(
+				'id'=>0,
+				'text'=>'Công ty mẹ',
+				'type_id'=>0
+			),
+			array(
+				'id'=>1,
+				'text'=>'CN/VPĐD/NM',
+				'type_id'=>1
+			),
+		);
+		
+		//$ArrUsers = $this->company_model->get_specialists(1);
 		$users = array();
-		foreach($ArrUsers as $user)
-		{
-			$t = array(
-				'id'=>$user['id'],
-				'text'=>$user['name']
-			);
-			$users[] = $t;
-		}
+		
 
 		$data['wards'] = json_encode($wards);
 		$data['cities'] = json_encode($cities);
 		$data['states'] = json_encode($states);
-		$data['fields'] = json_encode($fields);
+		$data['typies'] = json_encode($typies);
 		$data['users'] = json_encode($users);
 
 		$data['messages'] = $this->load->view('admin/includes/_messages',array(), TRUE);
 
 		if($this->input->post('submit')){
 				$this->form_validation->set_rules('companyname', 'companyname', 'trim|required|xss_clean|strip_tags');
-				$this->form_validation->set_rules('company_authorized', 'company_authorized', 'trim|required|xss_clean|strip_tags');
-				$this->form_validation->set_rules('main_product', 'main_product', 'trim|required|xss_clean|strip_tags');
+
 				$this->form_validation->set_rules('address', 'address', 'trim|required|xss_clean|strip_tags');
-				$this->form_validation->set_rules('company_phone', 'Number', 'trim|required|xss_clean|strip_tags');
+				$this->form_validation->set_rules('company_tel', 'Number', 'trim|required|xss_clean|strip_tags');
 				//$this->form_validation->set_rules('company_fax', 'Number', 'trim|required');
 				$this->form_validation->set_rules('state', 'state', 'trim|required');
 				$this->form_validation->set_rules('city', 'city', 'trim|required');
 				$this->form_validation->set_rules('ward', 'ward', 'trim|required');
-				$this->form_validation->set_rules('field', 'field', 'trim|required');
 				//$this->form_validation->set_rules('leader', 'leader', 'trim|required');
 				//$this->form_validation->set_rules('member', 'member', 'trim|required');
 				//$leader = $this->input->post('leader');
@@ -169,17 +162,19 @@ class Company extends MY_Controller
 					$data = array(
 						'name' => $this->input->post('companyname'),
 						'address' => $this->input->post('address'),
-						'tel' => $this->input->post('company_phone'),
-						'fax' => $this->input->post('company_fax'),
-						'authorized' => $this->input->post('company_authorized'),
-						'designation' => $this->input->post('company_designation'),
-						'product' => $this->input->post('main_product'),
+						'tel' => $this->input->post('company_tel'),
+						'company_number' => $this->input->post('company_number'),
+						'type' => $this->input->post('type'),
+						
 						'state_id' => $this->input->post('state'),
 						'city_id' => $this->input->post('city'),
 						'wards_id' => $this->input->post('ward'),
-						'created_date' => time(),
-						'creator_id' => $this->session->userdata('admin_id'),
-						'field_id'=>$this->input->post('field'),
+						'created_date' => date('m-d-Y h:m:s',time()),
+						'type'=>0,
+						'country_id'=>238, //Vietnam
+						'code'=>time(),
+						'owner_id'=>0,
+						'creator_id' => $this->session->userdata('id')
 					);
 					$data = $this->security->xss_clean($data);
 					$result = $this->company_model->add_company($data);

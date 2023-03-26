@@ -132,12 +132,25 @@ class Admin_roles_model extends CI_Model{
 		return true;
 	}
 
+	public function edit_module_by_uuid($data, $uuid){
+		$this->db->where('module_uuid', $uuid);
+		$this->db->update('modules', $data);
+		return true;
+	}
+
 	//-----------------------------------------------------
 	function delete_module($id)
 	{		
 		$this->db->where('id',$id);
 		$this->db->delete('modules');
 	} 
+
+	function delete_module_by_uuid($id)
+	{		
+		$this->db->where('module_uuid',$id);
+		return $this->db->delete('modules');
+	}
+	
 
 	//-----------------------------------------------------
 	function get_module_by_id($id)
@@ -176,6 +189,14 @@ class Admin_roles_model extends CI_Model{
 		return $query->row_array();
     } 	
 
+	function get_sub_module_by_uuid($uuid)
+    {
+		$this->db->from('sub_modules');
+		$this->db->where('sub_module_uuid',$uuid);
+		$query=$this->db->get();
+		return $query->row_array();
+    } 	
+
 	//-----------------------------------------------------
 	function get_sub_module_by_module($id)
     {
@@ -194,10 +215,26 @@ class Admin_roles_model extends CI_Model{
 		return true;
     }
 
+	function edit_sub_module_by_uuid($data, $uuid)
+    {
+    	$this->db->where('sub_module_uuid', $uuid);
+		$this->db->update('sub_modules', $data);
+		return true;
+    }
+
+	
+
     //-----------------------------------------------------
 	function delete_sub_module($id)
 	{		
 		$this->db->where('id',$id);
+		$this->db->delete('sub_modules');
+		return true;
+	} 
+
+	function delete_sub_module_by_uuid($uuid)
+	{		
+		$this->db->where('sub_module_uuid',$uuid);
 		$this->db->delete('sub_modules');
 		return true;
 	} 

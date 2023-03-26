@@ -11,6 +11,10 @@ volumes:
 networks:
     app_net:
     db_net:
+      ipam:
+        config:
+          - subnet: 192.168.33.0/24
+          
 
 services:
     ospos:
@@ -24,8 +28,9 @@ services:
         ports:
           - "9999:80"
         networks:
-          - app_net
-          - db_net
+          app_net:
+          db_net:
+              ipv4_address: 192.168.33.3
         volumes:
           - .:/app
           - uploads:/app/uploads
@@ -48,7 +53,8 @@ services:
         expose:
           - "3307:3306"
         networks:
-          - db_net
+          db_net:
+            ipv4_address: 192.168.33.2
         volumes:
           - ./database/database.sql:/docker-entrypoint-initdb.d/database.sql
           - mysql:/var/lib/mysql:rw

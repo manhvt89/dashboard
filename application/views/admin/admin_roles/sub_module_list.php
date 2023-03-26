@@ -34,10 +34,10 @@
 								<td><?= trans($record['name']); ?></td>
 								<td><?= $record['link']; ?></td>
 								<td>
-									<a href="<?php echo site_url("admin/admin_roles/sub_module_edit/".$record['id']); ?>" class="btn btn-warning btn-xs mr5" >
+									<a href="<?php echo site_url("admin/admin_roles/sub_module_edit/".$record['sub_module_uuid'].'/'.$record['parent_id']); ?>" class="btn btn-warning btn-xs mr5" >
 											<i class="fa fa-edit"></i>
 										</a>
-									<a href="<?php echo site_url("admin/admin_roles/sub_module_delete/".$record['id'].'/'.$record['parent_id']); ?>" onclick="return confirm('are you sure to delete?')" class="btn btn-danger btn-xs"><i class="fa fa-remove"></i></a>
+									<a href="<?php echo site_url("admin/admin_roles/sub_module_delete/".$record['sub_module_uuid'].'/'.$record['parent_id']); ?>" onclick="return confirm('Bạn có muốn xóa không?')" class="btn btn-danger btn-xs"><i class="fa fa-remove"></i></a>
 								</td>
 							</tr>
 						<?php endforeach; ?>

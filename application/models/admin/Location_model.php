@@ -11,7 +11,7 @@ class Location_Model extends CI_Model
 
 		$wh =array();
 
-		$query = $this->db->get('ci_countries');
+		$query = $this->db->get('countries');
 		$SQL = $this->db->last_query();
 
 		if(count($wh)>0)
@@ -30,7 +30,7 @@ class Location_Model extends CI_Model
 
 		$wh =array();
 
-		$query = $this->db->get('ci_states');
+		$query = $this->db->get('states');
 		$SQL = $this->db->last_query();
 
 		if(count($wh)>0)
@@ -49,7 +49,7 @@ class Location_Model extends CI_Model
 
 		$wh =array();
 
-		$query = $this->db->get('ci_cities');
+		$query = $this->db->get('cities');
 		$SQL = $this->db->last_query();
 
 		if(count($wh)>0)
@@ -67,21 +67,21 @@ class Location_Model extends CI_Model
 	//-----------------------------------------------------
 	public function add_country($data){
 
-		$result = $this->db->insert('ci_countries', $data);
+		$result = $this->db->insert('countries', $data);
         return $this->db->insert_id();	
 	}
 
 	//-----------------------------------------------------
 	public function add_state($data){
 
-		$result = $this->db->insert('ci_states', $data);
+		$result = $this->db->insert('states', $data);
         return true;	
 	}
 
 	//-----------------------------------------------------
 	public function add_city($data){
 
-		$result = $this->db->insert('ci_cities', $data);
+		$result = $this->db->insert('cities', $data);
         return true;	
 	}
 
@@ -89,7 +89,7 @@ class Location_Model extends CI_Model
 	public function edit_country($data, $id){
 
 		$this->db->where('id', $id);
-		$this->db->update('ci_countries', $data);
+		$this->db->update('countries', $data);
 		return true;
 
 	}
@@ -98,7 +98,7 @@ class Location_Model extends CI_Model
 	public function edit_state($data, $id){
 
 		$this->db->where('id', $id);
-		$this->db->update('ci_states', $data);
+		$this->db->update('states', $data);
 		return true;
 
 	}
@@ -107,7 +107,7 @@ class Location_Model extends CI_Model
 	public function edit_city($data, $id){
 
 		$this->db->where('id', $id);
-		$this->db->update('ci_cities', $data);
+		$this->db->update('cities', $data);
 		return true;
 
 	}
@@ -115,21 +115,21 @@ class Location_Model extends CI_Model
 	//-----------------------------------------------------
 	public function get_country_by_id($id){
 
-		$query = $this->db->get_where('ci_countries', array('id' => $id));
+		$query = $this->db->get_where('countries', array('id' => $id));
 		return $result = $query->row_array();
 	}
 
 	//-----------------------------------------------------
 	public function get_state_by_id($id){
 
-		$query = $this->db->get_where('ci_states', array('id' => $id));
+		$query = $this->db->get_where('states', array('id' => $id));
 		return $result = $query->row_array();
 	}
 
 	//-----------------------------------------------------
 	public function get_city_by_id($id){
 
-		$query = $this->db->get_where('ci_cities', array('id' => $id));
+		$query = $this->db->get_where('cities', array('id' => $id));
 		return $result = $query->row_array();
 	}
 
@@ -139,11 +139,11 @@ class Location_Model extends CI_Model
 	{
 		if($id==0)
 		{
-			return  $this->db->get('ci_countries')->result_array();	
+			return  $this->db->get('countries')->result_array();	
 		}
 		else
 		{
-			return  $this->db->select('id,country')->from('ci_countries')->where('id',$id)->get()->row_array();	
+			return  $this->db->select('id,country')->from('countries')->where('id',$id)->get()->row_array();	
 		}
 	}	
 
@@ -152,10 +152,10 @@ class Location_Model extends CI_Model
 	function get_cities_list($id=0)
 	{
 		if($id==0){
-			return  $this->db->get('ci_cities')->result_array();	
+			return  $this->db->get('cities')->result_array();	
 		}
 		else{
-			return  $this->db->select('id,city')->from('ci_cities')->where('id',$id)->get()->row_array();	
+			return  $this->db->select('id,city')->from('cities')->where('id',$id)->get()->row_array();	
 		}
 	}	
 
@@ -164,10 +164,10 @@ class Location_Model extends CI_Model
 	function get_states_list($id=0)
 	{
 		if($id==0){
-			return  $this->db->get('ci_states')->result_array();	
+			return  $this->db->get('states')->result_array();	
 		}
 		else{
-			return  $this->db->select('id,s')->from('ci_cities')->where('id',$id)->get()->row_array();	
+			return  $this->db->select('id,s')->from('cities')->where('id',$id)->get()->row_array();	
 		}
 	}
 	

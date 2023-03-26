@@ -68,10 +68,11 @@
 <script type="text/javascript">
   $("body").on("change",".tgl_checkbox",function(){
     console.log('checked');
+    console.log($(this).data('id'));
     $.post('<?=base_url("admin/users/change_status")?>',
     {
       '<?php echo $this->security->get_csrf_token_name(); ?>' : '<?php echo $this->security->get_csrf_hash(); ?>',
-      id : $(this).data('id'),
+      uuid : $(this).data('id'),
       status : $(this).is(':checked') == true?1:0
     },
     function(data){
