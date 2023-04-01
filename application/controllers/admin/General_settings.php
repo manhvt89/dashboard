@@ -92,7 +92,7 @@ class General_settings extends MY_Controller {
 		$data = $this->security->xss_clean($data);
 		$result = $this->setting_model->update_general_setting($data);
 		if($result){
-			$this->session->set_flashdata('success', 'Setting has been changed Successfully!');
+			$this->session->set_flashdata('success', 'Cập nhật thiết lập thành công');
 			redirect(base_url('admin/general_settings'), 'refresh');
 		}
 	}

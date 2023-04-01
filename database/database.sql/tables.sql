@@ -78,6 +78,8 @@ CREATE TABLE `companies` (
   `type` tinyint(1) NOT NULL DEFAULT 0,
   `deleted` tinyint(1) NOT NULL DEFAULT 0,
   `parent_id` int(11) NOT NULL DEFAULT 0,
+	`url_pm` varchar(250) NOT NULL DEFAULT '',
+	`token_pm` varchar(250) NOT NULL DEFAULT '',
   `company_uuid` tinyint(1) NOT NULL DEFAULT uuid()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -307,7 +309,7 @@ INSERT INTO `activity_status` (`id`, `description`) VALUES
 --
 
 INSERT INTO `users` (`id`, `user_role_id`, `username`, `firstname`, `lastname`, `email`, `mobile_no`, `image`, `password`, `last_login`, `is_verify`, `is_admin`, `is_active`, `is_supper`, `token`, `password_reset_code`, `last_ip`, `created_at`, `updated_at`) VALUES
-(25, 2, 'admin', 'Admin', 'User', 'manhvt@skgsms.com', '544354353', '', '$2y$10$UeBGAc7FBIRfIcCsJvGnQOjJNMZ/ZZJCCC2BSA6JvaayuU9WfvmqW', '2019-01-09 00:00:00', 1, 1, 1, 0, '', '', '', '2018-03-19 00:00:00', '2021-10-07 00:00:00'),
+(25, 2, 'admin', 'Admin', 'User', 'manhvt@skgsms.com', '544354353', '', '$2y$10$Y1ADHfhT4wLIFEyRQ9kieO3.B0.UvrRsw5aqudbTYB8lun/b5zKWK', '2019-01-09 00:00:00', 1, 1, 1, 0, '', '', '', '2018-03-19 00:00:00', '2021-10-07 00:00:00'),
 (26, 5, 'tchuyengia', 'T. Chuyên gia', 'Trưởng', 'bush@gmail.com', '5446546545665', '1c576d254c9f8a23c9243702bdb45a11.png', '$2y$10$3GdFO066ZLDxeGYq8qWOIe73HfrbsW7.EZCCXGnoVsrkSho2b12Xa', '2018-11-01 09:46:23', 1, 1, 1, 0, '', '', '', '2018-03-19 00:00:00', '2021-10-07 00:00:00'),
 (31, 1, 'superadmin', 'Nauman', 'Ahmed', 'naumanahmedcs@gmail.com', '123456', '', '$2y$10$cOTKTWhWOrWzDXldeXZKf.uxdCZLyYfftM8mSz3z63dBaTPJSXytO', '0000-00-00 00:00:00', 1, 1, 1, 1, '', '', '', '2019-01-16 06:01:58', '2019-07-16 09:07:37'),
 (32, 8, 'review', 'Smitt', 'Johan', 'johnsmith@gmail.com', '46545566554865', '', '$2y$10$WkRDXcUuchY0CWUlah9XBO9bywNgFoMjVpkvid40KPI0Jxd3qu6a.', '0000-00-00 00:00:00', 1, 1, 1, 0, '', '', '', '2019-07-15 08:07:34', '2021-10-07 00:00:00'),
